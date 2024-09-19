@@ -5,10 +5,10 @@ declare(strict_types=1);
 use Bentonow\BentoLaravel\BentoConnector;
 use Bentonow\BentoLaravel\DataTransferObjects\CreateSubscriberData;
 use Bentonow\BentoLaravel\Requests\CreateSubscriber;
+use Saloon\Exceptions\Request\Statuses\InternalServerErrorException;
 use Saloon\Http\Auth\BasicAuthenticator;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Exceptions\Request\Statuses\InternalServerErrorException;
 
 it('can create a subscriber', function (): void {
     $mockClient = new MockClient([
@@ -21,12 +21,12 @@ it('can create a subscriber', function (): void {
                     'email' => 'test@example.com',
                     'fields' => [],
                     'cached_tag_ids' => [],
-                ]
-            ]
+                ],
+            ],
         ], status: 200),
     ]);
 
-    $connector = new BentoConnector();
+    $connector = new BentoConnector;
     $connector->authenticate(new BasicAuthenticator('publish_key', 'secret_key'));
     $connector->withMockClient($mockClient);
 
@@ -53,7 +53,7 @@ it('fails to create a subscriber (500)', function (): void {
         ], status: 500),
     ]);
 
-    $connector = new BentoConnector();
+    $connector = new BentoConnector;
     $connector->authenticate(new BasicAuthenticator('publish_key', 'secret_key'));
     $connector->withMockClient($mockClient);
 

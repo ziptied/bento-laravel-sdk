@@ -20,12 +20,12 @@ it('can find a subscriber by email', function (): void {
                     'email' => 'test@example.com',
                     'fields' => [],
                     'cached_tag_ids' => [],
-                ]
-            ]
+                ],
+            ],
         ], status: 200),
     ]);
 
-    $connector = new BentoConnector();
+    $connector = new BentoConnector;
     $connector->authenticate(new BasicAuthenticator('publish_key', 'secret_key'));
     $connector->withMockClient($mockClient);
 
@@ -47,7 +47,7 @@ it('fails to find a subscriber by email', function (): void {
         FindSubscriber::class => MockResponse::make(body: [], status: 200),
     ]);
 
-    $connector = new BentoConnector();
+    $connector = new BentoConnector;
     $connector->authenticate(new BasicAuthenticator('publish_key', 'secret_key'));
     $connector->withMockClient($mockClient);
 
@@ -68,7 +68,7 @@ it('fails to find a subscriber by email (500)', function (): void {
         ], status: 500),
     ]);
 
-    $connector = new BentoConnector();
+    $connector = new BentoConnector;
     $connector->authenticate(new BasicAuthenticator('publish_key', 'secret_key'));
     $connector->withMockClient($mockClient);
 

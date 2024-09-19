@@ -20,12 +20,12 @@ it('can create a Tag', function (): void {
                     'name' => 'purchased',
                     'created_at' => '2024-08-06T05:44:04.444Z',
                     'discarded_at' => null,
-                ]
-            ]
+                ],
+            ],
         ], status: 200),
     ]);
 
-    $connector = new BentoConnector();
+    $connector = new BentoConnector;
     $connector->authenticate(new BasicAuthenticator('publish_key', 'secret_key'));
     $connector->withMockClient($mockClient);
 
@@ -51,7 +51,7 @@ it('fails to create a Tag (500)', function (): void {
         CreateTag::class => MockResponse::make(body: [], status: 500),
     ]);
 
-    $connector = new BentoConnector();
+    $connector = new BentoConnector;
     $connector->authenticate(new BasicAuthenticator('publish_key', 'secret_key'));
     $connector->withMockClient($mockClient);
 

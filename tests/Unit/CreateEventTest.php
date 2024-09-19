@@ -5,22 +5,21 @@ declare(strict_types=1);
 use Bentonow\BentoLaravel\BentoConnector;
 use Bentonow\BentoLaravel\DataTransferObjects\EventData;
 use Bentonow\BentoLaravel\Requests\CreateEvents;
+use Saloon\Exceptions\Request\Statuses\InternalServerErrorException;
 use Saloon\Http\Auth\BasicAuthenticator;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Exceptions\Request\Statuses\InternalServerErrorException;
 
 it('can create an event', function (): void {
 
-
     $mockClient = new MockClient([
         CreateEvents::class => MockResponse::make(body: [
-            "results" => 1,
-            "failed" => 0
+            'results' => 1,
+            'failed' => 0,
         ], status: 200),
     ]);
 
-    $connector = new BentoConnector();
+    $connector = new BentoConnector;
     $connector->authenticate(new BasicAuthenticator('publish_key', 'secret_key'));
     $connector->withMockClient($mockClient);
 
@@ -30,9 +29,9 @@ it('can create an event', function (): void {
             email: 'test@example.com',
             fields: [
                 'first_name' => 'John',
-                'last_name' => 'Doe'
+                'last_name' => 'Doe',
             ]
-        )
+        ),
     ]);
 
     $request = new CreateEvents($data);
@@ -48,22 +47,21 @@ it('can create an event', function (): void {
         ->and($request->body()->get('events')[0]->email)->toBe('test@example.com')
         ->and($request->body()->get('events')[0]->fields)->toBe([
             'first_name' => 'John',
-            'last_name' => 'Doe'
+            'last_name' => 'Doe',
         ]);
 
 });
 
 it('fails to create an event', function (): void {
 
-
     $mockClient = new MockClient([
         CreateEvents::class => MockResponse::make(body: [
-            "results" => 0,
-            "failed" => 1
+            'results' => 0,
+            'failed' => 1,
         ], status: 200),
     ]);
 
-    $connector = new BentoConnector();
+    $connector = new BentoConnector;
     $connector->authenticate(new BasicAuthenticator('publish_key', 'secret_key'));
     $connector->withMockClient($mockClient);
 
@@ -73,9 +71,9 @@ it('fails to create an event', function (): void {
             email: 'test@example.com',
             fields: [
                 'first_name' => 'John',
-                'last_name' => 'Doe'
+                'last_name' => 'Doe',
             ]
-        )
+        ),
     ]);
     $request = new CreateEvents($data);
     $response = $connector->send($request);
@@ -88,20 +86,19 @@ it('fails to create an event', function (): void {
         ->and($request->body()->get('events')[0]->email)->toBe('test@example.com')
         ->and($request->body()->get('events')[0]->fields)->toBe([
             'first_name' => 'John',
-            'last_name' => 'Doe'
+            'last_name' => 'Doe',
         ]);
 
 });
 
 it('throws an internal exception (500) creating an event', function (): void {
 
-
     $mockClient = new MockClient([
         CreateEvents::class => MockResponse::make(body: [
         ], status: 500),
     ]);
 
-    $connector = new BentoConnector();
+    $connector = new BentoConnector;
     $connector->authenticate(new BasicAuthenticator('publish_key', 'secret_key'));
     $connector->withMockClient($mockClient);
 
@@ -111,9 +108,9 @@ it('throws an internal exception (500) creating an event', function (): void {
             email: 'test@example.com',
             fields: [
                 'first_name' => 'John',
-                'last_name' => 'Doe'
+                'last_name' => 'Doe',
             ]
-        )
+        ),
     ]);
     $response = $connector->send(new CreateEvents($data));
 

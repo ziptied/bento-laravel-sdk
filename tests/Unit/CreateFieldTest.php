@@ -20,12 +20,12 @@ it('can create a field', function (): void {
                     'name' => 'First Name',
                     'key' => 'first_name',
                     'whitelisted' => null,
-                ]
-            ]
+                ],
+            ],
         ], status: 200),
     ]);
 
-    $connector = new BentoConnector();
+    $connector = new BentoConnector;
     $connector->authenticate(new BasicAuthenticator('publish_key', 'secret_key'));
     $connector->withMockClient($mockClient);
 
@@ -53,7 +53,7 @@ it('fails to create server error (500) a field', function (): void {
         ], status: 500),
     ]);
 
-    $connector = new BentoConnector();
+    $connector = new BentoConnector;
     $connector->authenticate(new BasicAuthenticator('publish_key', 'secret_key'));
     $connector->withMockClient($mockClient);
 

@@ -29,12 +29,12 @@ class BentoConnector extends Connector
     protected function defaultQuery(): array
     {
         return [
-            'site_uuid' => config('bentonow.siteUUID'),
+            'site_uuid' => config('bentonow.site_uuid'),
         ];
     }
 
     protected function defaultAuth(): BasicAuthenticator
     {
-        return new BasicAuthenticator(config('bentonow.publishableKey'), config('bentonow.secretKey'));
+        return new BasicAuthenticator(config('bentonow.publishable_key'), config('bentonow.secret_key'));
     }
 }

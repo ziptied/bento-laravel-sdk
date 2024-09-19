@@ -9,8 +9,8 @@ use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 
 class BentoConnector extends Connector
 {
-
     use AlwaysThrowOnErrors;
+
     protected ?string $response = BentoApiResponse::class;
 
     public function resolveBaseUrl(): string

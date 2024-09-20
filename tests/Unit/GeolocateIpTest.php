@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use Bentonow\BentoLaravel\BentoConnector;
 use Bentonow\BentoLaravel\DataTransferObjects\GeoLocateIpData;
-use Bentonow\BentoLaravel\Requests\FindSubscriber;
 use Bentonow\BentoLaravel\Requests\GeoLocateIP;
 use Saloon\Http\Auth\BasicAuthenticator;
 use Saloon\Http\Faking\MockClient;
@@ -16,31 +15,31 @@ it('can geolocate an ip address', function (): void {
             'data' => [
                 [
                     'request' => '1.1.1.1',
-                    'ip' =>  '1.1.1.1',
+                    'ip' => '1.1.1.1',
                     'country_code2' => 'JP',
-                    'country_code3' =>  'JPN',
+                    'country_code3' => 'JPN',
                     'country_name' => 'Japan',
-                    'continent_code' =>  'AS',
+                    'continent_code' => 'AS',
                     'region_name' => '42',
-                    'city_name' =>  'Tokyo',
+                    'city_name' => 'Tokyo',
                     'postal_code' => '206-0000',
-                    'latitude' =>  35.6895,
+                    'latitude' => 35.6895,
                     'longitude' => 139.69171,
-                    'dma_code' =>  null,
+                    'dma_code' => null,
                     'area_code' => null,
-                    'timezone' =>  'Asia/Tokyo',
+                    'timezone' => 'Asia/Tokyo',
                     'real_region_name' => 'Tokyo',
-                ]
+                ],
 
             ],
         ], status: 200),
     ]);
 
-    $connector = new BentoConnector();
+    $connector = new BentoConnector;
     $connector->authenticate(new BasicAuthenticator('publish_key', 'secret_key'));
     $connector->withMockClient($mockClient);
 
-    $data = new GeoLocateIpData("1.1.1.1");
+    $data = new GeoLocateIpData('1.1.1.1');
 
     $request = new GeoLocateIP($data);
 

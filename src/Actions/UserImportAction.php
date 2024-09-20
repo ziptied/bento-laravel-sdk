@@ -14,7 +14,7 @@ class UserImportAction
     {
 
         $users->chunk(500)->each(function ($usersChunk): void {
-            $bento = new BentoConnector();
+            $bento = new BentoConnector;
             $request = new ImportSubscribers($usersChunk);
             $bento->send($request);
         });

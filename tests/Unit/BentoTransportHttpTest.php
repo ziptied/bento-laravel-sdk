@@ -10,7 +10,7 @@ use Symfony\Component\Mime\Email;
 
 function makeSentMessage(): SentMessage
 {
-    $email = (new Email())
+    $email = (new Email)
         ->from(new Address('sender@example.com', 'Sender Name'))
         ->to(new Address('recipient@example.com', 'Recipient Name'))
         ->subject('Subject Line')

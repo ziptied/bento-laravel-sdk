@@ -7,7 +7,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 
 it('transforms a sent message with full recipient lists into the expected payload', function () {
-    $email = (new Email())
+    $email = (new Email)
         ->from(new Address('sender@example.com', 'Sender Name'))
         ->to(
             new Address('recipient1@example.com', 'Recipient One'),
@@ -32,7 +32,7 @@ it('transforms a sent message with full recipient lists into the expected payloa
         )
     );
 
-    $payload = (new SentMessagePayloadTransformer())->transform($sentMessage);
+    $payload = (new SentMessagePayloadTransformer)->transform($sentMessage);
 
     expect($payload)->toEqual([
         'emails' => [[
@@ -48,7 +48,7 @@ it('transforms a sent message with full recipient lists into the expected payloa
 });
 
 it('omits optional recipient lists when they are not present on the message', function () {
-    $email = (new Email())
+    $email = (new Email)
         ->from('sender@example.com')
         ->to('recipient@example.com')
         ->subject('Missing optional recipients')
@@ -62,7 +62,7 @@ it('omits optional recipient lists when they are not present on the message', fu
         )
     );
 
-    $payload = (new SentMessagePayloadTransformer())->transform($sentMessage);
+    $payload = (new SentMessagePayloadTransformer)->transform($sentMessage);
 
     expect($payload['emails'][0])->toMatchArray([
         'from' => 'sender@example.com',

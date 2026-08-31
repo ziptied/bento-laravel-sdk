@@ -29,7 +29,7 @@ use Illuminate\Console\Command as BaseCommand;
 class ValidateCommand extends BaseCommand
 {
     protected $signature = 'bento:validate
-        {--email= : Email address to use for subscriber tests (default: from config or test@example.com)}
+        {--email= : Email address to use for subscriber tests (default: test@example.com)}
         {--skip-write : Skip tests that create/modify data (imports, commands, broadcasts, etc.)}';
 
     protected $description = 'Validate all Bento SDK methods against the live API and display results';
@@ -40,9 +40,7 @@ class ValidateCommand extends BaseCommand
 
     public function handle(): int
     {
-        $this->testEmail = $this->option('email')
-            ?? config('mail.from.address')
-            ?? 'test@example.com';
+        $this->testEmail = $this->option('email') ?: 'test@example.com';
 
         $skipWrite = $this->option('skip-write');
 
@@ -239,7 +237,7 @@ class ValidateCommand extends BaseCommand
                         exclusive_tags: '',
                         batch_size_per_hour: 10,
                         send_at: now()->addYear()->toIso8601String(),
-                        segment_id: 'segment_kvB6Klz59G50Ho07ZQqGNbLe',
+                        segment_id: '123',
                     ),
                 ]));
 
